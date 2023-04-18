@@ -1,6 +1,6 @@
 import React from 'react';
-import useStyles from "./styles";
-import { Box, Typography } from "@mui/material";
+import useStyles from './styles';
+import { Box, Typography } from '@mui/material';
 import Movie from '../Movie/Movie';
 
 const RatedCards = ({title, data}) => {

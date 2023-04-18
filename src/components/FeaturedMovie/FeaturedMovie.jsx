@@ -1,7 +1,7 @@
-import React from "react";
-import useStyles from "./styles";
-import { Box, Typography, Card, CardContent, CardMedia } from "@mui/material";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Box, Typography, Card, CardContent, CardMedia } from '@mui/material';
+import { Link } from 'react-router-dom';
+import useStyles from './styles';
 
 const FeaturedMovie = ({ movie }) => {
   const classes = useStyles();
@@ -22,11 +22,16 @@ const FeaturedMovie = ({ movie }) => {
           title={movie.title}
           className={classes.cardMedia}
         />
-        <Box padding='20px'>
-            <CardContent className={classes.cardContent} classes={{ root: classes.cardContentRoot }}>
-                <Typography variant="h5" gutterBottom>{movie.title}</Typography>
-                <Typography variant="body2">{movie.overview}</Typography>
-            </CardContent>
+        <Box padding="20px">
+          <CardContent
+            className={classes.cardContent}
+            classes={{ root: classes.cardContentRoot }}
+          >
+            <Typography variant="h5" gutterBottom>
+              {movie.title}
+            </Typography>
+            <Typography variant="body2">{movie.overview}</Typography>
+          </CardContent>
         </Box>
       </Card>
     </Box>

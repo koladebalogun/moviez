@@ -1,48 +1,63 @@
 import React, { useContext, useEffect, useState } from "react";
-import { AppBar, IconButton, Toolbar, Drawer, Button, Avatar, useMediaQuery } from "@mui/material";
-import { Menu, AccountCircle, Brightness4, Brightness7 } from "@mui/icons-material";
+import {
+  AppBar,
+  IconButton,
+  Toolbar,
+  Drawer,
+  Button,
+  Avatar,
+  useMediaQuery,
+} from "@mui/material";
+import {
+  Menu,
+  AccountCircle,
+  Brightness4,
+  Brightness7,
+} from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import useStyles from "./styles";
 import { useTheme } from "@mui/material/styles";
+import { useDispatch, useSelector } from "react-redux";
+import useStyles from "./styles";
 import SideBar from "../Sidebar/SideBar";
 import Search from "../Search/Search";
-import { useDispatch, useSelector } from "react-redux";
 import { setUser, userSelector } from "../../features/auth";
-import { fetchToken } from "../../utils";
-import { getSessionId, moviesApi } from "../../utils";
+import { getSessionId, moviesApi, fetchToken } from "../../utils";
 import { ColorModeContext } from "../../utils/ToggleColor";
 
 const NavBar = () => {
   const dispatch = useDispatch();
-  const {isAuthenticated, user} = useSelector(userSelector)
+  const { isAuthenticated, user } = useSelector(userSelector);
   const [mobileOpen, setMobileOpen] = useState(false);
   const classes = useStyles();
   const isMobile = useMediaQuery("(max-width:600px)");
   const theme = useTheme();
-  const token = localStorage.getItem('request_token');
-  const sessionId = localStorage.getItem('session_id');
-  const colorMode = useContext(ColorModeContext)
+  const token = localStorage.getItem("request_token");
+  const sessionId = localStorage.getItem("session_id");
+  const colorMode = useContext(ColorModeContext);
 
   useEffect(() => {
     const logInUser = async () => {
-      if(token){
-        if(sessionId){
-          const {data: userData} = await moviesApi.get(`/account?session_id=${sessionId}`);
+      if (token) {
+        if (sessionId) {
+          const { data: userData } = await moviesApi.get(
+            `/account?session_id=${sessionId}`
+          );
 
-          dispatch(setUser(userData))
-        } else{
+          dispatch(setUser(userData));
+        } else {
           const sessionToken = await getSessionId();
 
-          const {data: userData} = await moviesApi.get(`/account?session_id=${sessionToken}`)
+          const { data: userData } = await moviesApi.get(
+            `/account?session_id=${sessionToken}`
+          );
 
-          dispatch(setUser(userData))
-
+          dispatch(setUser(userData));
         }
       }
-    }
+    };
 
-    logInUser()
-  },[token])
+    logInUser();
+  }, [token]);
   return (
     <>
       <AppBar position="fixed">
@@ -58,10 +73,14 @@ const NavBar = () => {
               <Menu />
             </IconButton>
           )}
-          <IconButton color="inherit" sx={{ ml: 1 }} onClick={colorMode.toggleColorMode}>
+          <IconButton
+            color="inherit"
+            sx={{ ml: 1 }}
+            onClick={colorMode.toggleColorMode}
+          >
             {theme.palette.mode === "dark" ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
-          {!isMobile && <Search/>}
+          {!isMobile && <Search />}
 
           <div>
             {!isAuthenticated ? (
@@ -85,7 +104,7 @@ const NavBar = () => {
               </Button>
             )}
           </div>
-          {isMobile && <Search/>}
+          {isMobile && <Search />}
         </Toolbar>
       </AppBar>
       <div>
@@ -96,7 +115,7 @@ const NavBar = () => {
               anchor="right"
               open={mobileOpen}
               onClose={() => setMobileOpen((prev) => !prev)}
-              classes={{ paper: classes.drawerPaper }} //overriding material ui default piece/ component
+              classes={{ paper: classes.drawerPaper }}
               ModalProps={{ keepMounted: true }}
             >
               <SideBar setMobileOpen={setMobileOpen} />
@@ -105,8 +124,7 @@ const NavBar = () => {
             <Drawer
               variant="permanent"
               open
-              classes={{ paper: classes.drawerPaper }} //overriding material ui default piece/ component
-              // ModalProps={{ keepMounted: true }}
+              classes={{ paper: classes.drawerPaper }}
             >
               <SideBar setMobileOpen={setMobileOpen} />
             </Drawer>

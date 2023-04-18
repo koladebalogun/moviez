@@ -1,12 +1,12 @@
-import React from "react";
-import { CssBaseline } from "@mui/material";
-import { Routes, Route } from "react-router-dom";
-import { Actors, MovieInformation, Movies, Profile } from "./pages";
-import NavBar from "./components/Navbar/NavBar";
-import useStyles from './style'
+import React from 'react';
+import { CssBaseline } from '@mui/material';
+import { Routes, Route } from 'react-router-dom';
+import { Actors, MovieInformation, Movies, Profile } from './pages';
+import NavBar from './components/Navbar/NavBar';
+import useStyles from './style';
 
 const App = () => {
-  const classes = useStyles()
+  const classes = useStyles();
   return (
     <div className={classes.root}>
       <CssBaseline />
